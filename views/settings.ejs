@@ -1,0 +1,27 @@
+<%- include("_header.ejs", {title: title}) %>
+<body>
+    <a href="/chats">Back</a>
+
+    <hr>
+
+    <form action="/change-password" method="post">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <button type="submit">Change password</button>
+    </form>
+
+    <hr>
+
+    <% if (user.totp_secret == null) { %>
+    <a href="/enable-two-factor-authentication">Enable two-factor authentication</a> <br>
+    <% } else { %>
+    <img src="<%= user.totp_qr%>" alt="TOTP QR"> <br>
+    <button onclick='navigator.clipboard.writeText("<%= user.totp_uri %>")' >Copy URI</button> <br>
+    <a href="/disable-two-factor-authentication">Disable two-factor authentication</a> <br>
+    <% } %>
+
+    <hr>
+
+    <a href="/delete-account">Delete account</a>
+</body>
+</html>

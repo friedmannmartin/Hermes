@@ -1,0 +1,11 @@
+<% for(const message of messages) { %>
+    <% if (message.sender == user.id) { %>
+        <div class="message message-sent">
+            <%= message.text %>
+        </div>
+    <% } else { %>
+        <div class="message message-recived">
+            <%= message.text %>
+        </div>
+    <% } %>
+<% } %>

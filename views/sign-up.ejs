@@ -1,0 +1,47 @@
+<%- include("_header.ejs", {title: title}) %>
+    <body>
+        <div class="container">
+            <div class="main">
+                <form class="auth-form" action="/sign-up" method="post">
+                    <h2>Sign up</h2>
+
+                    <% if (typeof err !== "undefined") { %>
+                    <div class="err">
+                        <i class="fa-solid fa-ban"></i> <%= err %>
+                    </div>
+                    <% } %>
+
+                    <div class="auth-form-row">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" required />
+                    </div>
+
+                    <div class="auth-form-row">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" required />
+                    </div>
+
+                    <div class="auth-form-row">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" required/>
+                    </div>
+
+                    <div class="auth-form-row">
+                        <button type="submit">
+                            <i class="fa-solid fa-right-to-bracket fa-sm fa-fw"></i> Sign up
+                        </button>
+                    </div>
+
+                    <div class="auth-form-row">
+                        Already a member? <a href="/">Sign in</a>
+                    </div>
+                </form>
+
+                <div class="footer">NODEST &copy; 2022</div>
+            </div>
+            <div class="aside">
+                <div class="logo">NODEST</div>
+            </div>
+        </div>
+    </body>
+</html>

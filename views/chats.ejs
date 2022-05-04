@@ -1,0 +1,62 @@
+<% if(typeof friend !== "undefined") { %>
+    <%- include("_header.ejs", {title: friend.name}) %>
+<% } else { %>
+    <%- include("_header.ejs", {title: title}) %>
+<% } %>
+    <body>
+        <div class="container">
+            <div class="main">
+                <div class="user">
+                    <span class="user-name">
+                        <div class="avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <%= user.name %>
+                    </span>
+                    <span class="user-options">
+                        <a href="/settings"><i class="fa-solid fa-sliders"></i></a>
+                        <a href="/sign-out"><i class="fa-solid fa-power-off"></i></a>
+                    </span>
+                </div>
+                <div class="chats" id="friends">
+                    <%- include('_friends') %>
+                </div>
+                <div class="footer">NODEST &copy; 2022</div>
+            </div>
+            <div class="aside">
+                <% if(typeof friend !== "undefined") { %>
+                <div class="messages" id="messages">
+                    <%- include('_messages') %>
+                </div>
+                <form class="new-message" action="/send-message" method="post">
+                    <input type="text" name="text" id="text" placeholder="Type your message..." required/>
+                    <input type="hidden" name="addressee" value="<%= friend.id %>">
+                    <button type="submit">
+                        <i class="fa-solid fa-paper-plane fa-fw"></i> Send
+                    </button>
+                </form>
+                <% } else { %>
+                <div class="logo">NODEST</div>
+                <% } %>
+            </div>
+        </div>
+        <script>
+            const ws = new WebSocket("ws://<%= appUrl %>");
+            console.log(ws)
+            ws.addEventListener("open", (con) => {
+                ws.send("<%= user.id %>")
+            })
+            ws.addEventListener("message", (message) => {
+                const json = JSON.parse(message.data);
+                if (json.type === "friends") {
+                    document.getElementById("friends").innerHTML = json.html;
+                } else if (json.type === "messages" && json.addressee == "<%= user.id %>") {
+                    document.getElementById("messages").innerHTML = json.html;
+                }
+            });
+
+            const messages = document.getElementById("messages");
+            messages.scrollTop = messages.scrollHeight;
+        </script>
+    </body>
+</html>

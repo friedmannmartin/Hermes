@@ -1,0 +1,19 @@
+<% for (const friend of friends) { %>
+    <% if (friend.id === user.id) { %>
+        <% continue; %>
+    <% } else if ( typeof selected_user !== "undefined" && friend.id === selected_user.id) { %>
+        <a class="chat selected-chat" href="/chat/<%= friend.name %>">
+            <div class="avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <%= friend.name %>
+        </a>
+    <% } else {%>
+        <a class="chat" href="/chat/<%= friend.name %>">
+            <div class="avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <%= friend.name %>
+        </a>
+    <% } %>
+<% } %>
